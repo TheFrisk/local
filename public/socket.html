@@ -16,6 +16,7 @@
 
 
 
+
           <div id='player_select' class='need_interaction'><p>Nombre de joueurs</p><p id='player_number' class='aligned-mid'>4</p><input id='player_number_input' class='aligned-mid' type='range' value='4' min='4' max='8' ><button id="start_game" class='aligned-mid'>Commencer</button></div>
 
 
@@ -24,20 +25,15 @@
                 /*Initializing the connection with the server via websockets */
                 socket.on("message",function(message){
 
-                  message = JSON.parse(message);
-                  if(message.is_init == 0)
-                  {
-                    //on verra
-                  }
-                  else {
-                    alert("plooup");
-                  }
+
+
 
                   // if(message.turn_info != 0)
                   // {
                   //   init_plateau();
                   // }
                 });
+
                 // $(function(){
                 //     $('#dice').click(function(){ /*listening to the button click using Jquery listener*/
                 //

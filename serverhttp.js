@@ -1,17 +1,33 @@
+/*============Mongo DB ===============*/
+
+var MongoClient = require('mongodb').MongoClient;
+
+/*=========== FIN ============*/
+
+/*============ SOCKET ET SERVEUR =========*/
+
 var express = require('express');
 var http = require('http');
 var io = require('socket.io');
 
-/*===========Décalaration des variables =============*/
+/*============= FIN ============*/
+
+/*=========== Décalaration des variables =============*/
 
 var joueurs = 0;
 var tour = 0;
 
-/*===========FIN==============*/
+/*=========== FIN ==============*/
 
+/*========== Connection MongoDB =========*/
 
+MongoClient.connect("mongodb://localhost:27017/huco", function(err, db) {
+  if(!err) {
+    console.log("We are connected to database");
+  }
+});
 
-
+/*============ FIN =============*/
 
 /*=============  PARAMETRES D INITIALISATION DU SERVEUR ==============*/
 
@@ -24,7 +40,7 @@ var server =http.createServer(app).listen(8080);
 io = io.listen(server);
 /*initializing the websockets communication , server instance has to be sent as the argument */
 
-/*========================FIN=================*/
+/*=================== FIN =================*/
 
 
 
@@ -38,13 +54,6 @@ io.sockets.on("connection",function(socket){
 
     console.log("connected to tablet client!");
     //on vérifie qu'on est bien connecté au client.
-
-    var init_the_game={
-      is_init : 0
-    }
-
-    socket.send(JSON.stringify(init_the_game));
-
 
 
     //   var message_to_client = {
@@ -74,6 +83,24 @@ io.sockets.on("connection",function(socket){
 
     //});
 
+
+    socket.on("message",function(data){
+      console.log("message Received");
+      data = JSON.parse(data);
+      if(data.android != null)
+      {
+        console.log("I am an android");
+      }
+
+      if(data.player_order != null)
+      {
+        console.log("order recieved !");
+        console.log(data.player_order);
+      }
+    });
+
 });
+
+
 
 /*=====================FIN==================*/
